@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>TA2 - Portfolio</title>
+    <style>
+        /* --- THEME VARIABLES --- */
+        :root {
+            --bg-color: #000;
+            --text-color: #fff;
+            --border-color: #333;
+            --border-light: #222;
+            --muted-color: #888;
+            --shadow-color: #000;
+            --overlay-bg: rgba(0,0,0,0.85);
+        }
+
+        /* Light Theme Overrides */
+        body.light-mode {
+            --bg-color: #fff;
+            --text-color: #000;
+            --border-color: #aaa;
+            --border-light: #ccc;
+            --muted-color: #555;
+            --shadow-color: #fff;
+            --overlay-bg: rgba(255,255,255,0.85);
+        }
+
+        /* Reset & Base */
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        html { scroll-behavior: smooth; }
+        
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 14px;
+            line-height: 1.6;
+            padding: 20px;
+            max-width: 600px;
+            margin: 0 auto;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Typography Utilities */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .justify-between { justify-content: space-between; }
+        .items-start { align-items: flex-start; }
+        .text-right { text-align: right; }
+        .text-muted { color: var(--muted-color); }
+        .text-sm { font-size: 12px; }
+        .text-xs { font-size: 10px; }
+        
+        /* Spacing */
+        .mb-1 { margin-bottom: 12px; }
+        .mb-2 { margin-bottom: 25px; }
+        .mb-3 { margin-bottom: 40px; }
+        .mt-1 { margin-top: 12px; }
+        .mt-2 { margin-top: 25px; }
+        .gap-1 { gap: 8px; }
+        .gap-2 { gap: 20px; }
+
+        /* Anchor Links */
+        a { text-decoration: none; color: inherit; }
+        .nav-link { transition: opacity 0.2s; }
+        .nav-link:active { opacity: 0.5; }
+
+        /* Pixel Art Header */
+        .pixel-title {
+            font-family: 'Courier New', monospace;
+            font-size: 36px; 
+            font-weight: bold;
+            line-height: 0.85;
+            letter-spacing: -1px;
+            text-shadow: 
+                0px 2px 0 var(--shadow-color), 0px -2px 0 var(--shadow-color), 
+                2px 0px 0 var(--shadow-color), -2px 0px 0 var(--shadow-color),
+                0px 4px 0 var(--shadow-color), 0px -4px 0 var(--shadow-color),
+                4px 0px 0 var(--shadow-color), -4px 0px 0 var(--shadow-color);
+            margin-bottom: 15px;
+            transition: text-shadow 0.3s ease;
+        }
+        .pixel-title span { display: inline-block; margin-right: 3px; }
+
+        /* Navigation Bars */
+        .nav-bar {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr 1fr; 
+            gap: 10px;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 0;
+            font-size: 11px;
+            text-align: center;
+            margin-bottom: 30px;
+            transition: border-color 0.3s ease;
+        }
+        .nav-item { 
+            display: flex; 
+            flex-direction: column;
+            align-items: center; 
+            justify-content: center;
+            gap: 4px;
+            cursor: pointer;
+        }
+        .nav-icon-box { 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 18px; 
+            height: 18px; 
+            border: 1px solid var(--muted-color); 
+            transition: border-color 0.3s ease;
+        }
+
+        /* PURE SVG ICONS */
+        .theme-icon-svg {
+            width: 12px;
+            height: 12px;
+            fill: var(--text-color);
+            transition: fill 0.3s ease;
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-size: 12px;
+            letter-spacing: 1px; 
+            border-bottom: 1px solid var(--border-color); 
+            padding-bottom: 8px;
+            margin-bottom: 15px;
+            scroll-margin-top: 20px;
+            transition: border-color 0.3s ease;
+        }
+
+        /* Text Wrappers */
+        .block-text { display: block; margin-bottom: 8px; }
+        .indent-text { padding-left: 15px; border-left: 1px solid var(--border-color); margin-top: 15px; transition: border-color 0.3s ease; }
+
+        /* Projects */
+        .project-row {
+            display: flex;
+            flex-direction: column;
+            border-bottom: 1px solid var(--border-light);
+            padding: 15px 0;
+            gap: 5px;
+            transition: border-color 0.3s ease;
+        }
+        .project-row:last-child { border-bottom: none; }
+        .project-title { font-weight: bold; letter-spacing: 1px; font-size: 14px; }
+        .project-meta { font-size: 12px; color: var(--muted-color); }
+
+        /* CLICKABLE PROJECT HEADER */
+        .project-clickable {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            cursor: pointer;
+            padding: 4px 0;
+            transition: opacity 0.2s;
+        }
+        .project-clickable:active { opacity: 0.5; }
+
+        /* Footer */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            font-size: 10px;
+            color: var(--muted-color);
+            padding: 15px 0;
+            border-top: 1px solid var(--border-color);
+            margin-top: 20px;
+            transition: border-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Tooltip for Copy Email */
+        #copy-tooltip {
+            visibility: hidden;
+            opacity: 0;
+            background: var(--text-color);
+            color: var(--bg-color);
+            text-align: center;
+            border-radius: 4px;
+            padding: 4px 8px;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            font-size: 12px;
+            transition: opacity 0.3s;
+        }
+        #copy-tooltip.show {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* --- MODAL / POPUP STYLES --- */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--overlay-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+            visibility: hidden;
+            opacity: 0;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+            backdrop-filter: blur(2px);
+        }
+        .modal-overlay.open {
+            visibility: visible;
+            opacity: 1;
+        }
+        .modal-box {
+            background: var(--bg-color);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            max-width: 85%;
+            max-height: 80%;
+            overflow-y: auto;
+            position: relative;
+            text-align: left;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.open .modal-box {
+            transform: scale(1);
+        }
+        .modal-close {
+            position: absolute;
+            top: 10px; right: 15px;
+            font-size: 20px;
+            cursor: pointer;
+            color: var(--text-color);
+            transition: opacity 0.2s;
+        }
+        .modal-close:active { opacity: 0.5; }
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            padding-right: 20px;
+            border-bottom: 1px solid var(--border-light);
+            padding-bottom: 10px;
+        }
+        .modal-desc {
+            font-size: 13px;
+            line-height: 1.6;
+            margin-bottom: 15px;
+            text-transform: none; /* Allow proper sentences */
+        }
+        .modal-link {
+            display: inline-block;
+            margin-top: 5px;
+            color: var(--text-color);
+            text-decoration: underline;
+            text-underline-offset: 3px;
+            font-size: 12px;
+        }
+        .modal-link:active { opacity: 0.5; }
+    </style>
+</head>
+<body>
+
+    <!-- TOOLTIP FOR COPY -->
+    <div id="copy-tooltip">COPIED!</div>
+
+    <!-- MODAL POPUP CONTAINER -->
+    <div class="modal-overlay" id="projectModal" onclick="closeModalOutside(event)">
+        <div class="modal-box">
+            <span class="modal-close" onclick="closeModal()">✕</span>
+            <div class="modal-title" id="modalTitle">PROJECT TITLE</div>
+            <div class="modal-desc" id="modalDesc">Project description goes here.</div>
+            <div id="modalLinks"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header class="flex justify-between items-start mb-1">
+        <h1 class="pixel-title"><span>TA2</span></h1>
+        <div class="text-right text-sm" style="margin-top: 5px; line-height: 1.4;">
+            <div>/ WEB DEVELOPMENT</div>
+            <div>& GAME DESIGN</div>
+            <div>& CREATIVE WRITING</div>
+            <br>
+            <div>/ SELF-TAUGHT</div>
+            <div>ALWAYS BUILDING</div>
+        </div>
+    </header>
+
+    <!-- TOP NAVIGATION -->
+    <nav class="nav-bar">
+        <div class="nav-item text-muted">
+            <span class="nav-icon-box"><span style="position:absolute;">⌂</span></span> HOME
+        </div>
+        <a href="#projects" class="nav-item nav-link">
+            <span class="nav-icon-box"><span style="position:absolute;">◫</span></span> PROJECTS
+        </a>
+        <a href="#contact" class="nav-item nav-link">
+            <span class="nav-icon-box"><span style="position:absolute;">◑</span></span> CONTACT
+        </a>
+        <div class="nav-item nav-link" onclick="toggleTheme()">
+            <span class="nav-icon-box">
+                <svg id="theme-icon" class="theme-icon-svg" viewBox="0 0 24 24">
+                    <path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/>
+                </svg>
+            </span> THEME
+        </div>
+    </nav>
+
+    <!-- BIOGRAPHY -->
+    <section class="mb-3">
+        <h2 class="section-header">WHO I AM</h2>
+        
+        <div class="block-text">
+            I build web apps, prototype game concepts, and write fiction. I don't do "AI-generated" resumes. I do things that work, worlds that feel real, and code that's intentional.
+        </div>
+        
+        <div class="block-text text-muted">
+            I'm not a senior developer. I'm not pretending to be. I'm a beginner who actually builds things—bookshelves, games, libraries, stories, and design docs. That puts me ahead of most people stuck on tutorials.
+        </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="mb-3">
+        <h2 class="section-header">WHAT I BUILD</h2>
+        
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('BOOKSHELF', 'An offline PWA library manager that lets you store books, track reading status, and view them organized on a 3D wooden shelf interface. Built as a fully functional offline-capable web app.', 'apk', 'sngpb19mkg508ml')">
+                <div class="project-title">▮ BOOKSHELF</div>
+                <div class="text-xs text-muted project-meta">WEB APP</div>
+            </div>
+            <div class="text-xs text-muted">An offline PWA library manager. Store books, track reading status, and view them on a 3D wooden shelf.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('PRIMARY', 'A color memory game where you must memorize a target color and accurately recreate it using RGB sliders. Your score is calculated based on how precise your color matching is.', 'apk', 'q36xnwrc36zjbwn')">
+                <div class="project-title">▮ PRIMARY</div>
+                <div class="text-xs text-muted project-meta">WEB APP</div>
+            </div>
+            <div class="text-xs text-muted">A color memory game. Memorize a color, recreate it using RGB sliders, and score based on accuracy.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('STUMBLE', 'A web randomizer tool that sends you to hidden, weird, and interesting corners of the internet with a single tap. Discover obscure sites and unexpected content across the web.', 'web', 'https://stumble-io.netlify.app')">
+                <div class="project-title">▮ STUMBLE</div>
+                <div class="text-xs text-muted project-meta">WEB APP</div>
+            </div>
+            <div class="text-xs text-muted">A web randomizer that sends you to hidden, weird, and interesting corners of the internet.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('THE LOOP', 'A 3D atmospheric platformer about a child who breaks free from an oppressive school system to discover the beauty of nature. Explore a vibrant forest, bond with wildlife through rhythm-based petting and healing mechanics, and face the consequences of defying conformity. The game is inspired by Little Nightmares and Inside, offering a 2-4 hour narrative-driven adventure.', 'gdd', '1NRxaWkRofYcpiQIXNQx3rSz6AwUielph')">
+                <div class="project-title">▮ THE LOOP</div>
+                <div class="text-xs text-muted project-meta">GAME CONCEPT</div>
+            </div>
+            <div class="text-xs text-muted">A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('CONCRETE SHIFT', 'A first-person rhythm-based survival game where a construction worker becomes trapped inside a vertical concrete pipe filled with wet cement. He must carefully control his movement to avoid sinking deeper or letting the cement harden around him. Manage risk, time your actions to visual cues, and decide whether to climb out or reach for a phone to call for help.', 'gdd', '1no5a8Jb-T1rSOrofxKcoJ6NNpbEFIId6')">
+                <div class="project-title">▮ CONCRETE SHIFT</div>
+                <div class="text-xs text-muted project-meta">GAME CONCEPT</div>
+            </div>
+            <div class="text-xs text-muted">A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('ESCAPE THE SALE', 'A first-person 3D maze runner where a husband trapped inside a massive furniture store during a massive sale must navigate complex showrooms and storage aisles to escape. He must run before his wife accumulates an overwhelming bill, dodging NPCs, finding exits, and managing score by keeping the final bill as low as possible.', 'gdd', '1hEBGfhJZft8erwAdDGGZtxo3Qs2-uIFa')">
+                <div class="project-title">▮ ESCAPE THE SALE</div>
+                <div class="text-xs text-muted project-meta">GAME CONCEPT</div>
+            </div>
+            <div class="text-xs text-muted">A first-person maze runner where a husband must escape a furniture store before his wife's shopping bill becomes overwhelming.</div>
+        </div>
+
+        <div class="project-row">
+            <div class="project-clickable" onclick="openModal('ANIMAL RIDER', 'An arcade racing game set in a world where fuel prices have become too high for vehicles. The player returns to the countryside and begins traveling using rideable animals. High-speed drifting builds energy, unlocking a temporary Super Sonic mode that allows you to destroy obstacles and push your animal to extreme speeds.', 'gdd', '1oV1CDefZn5pXu8UtplgRDatCfoCBvcKj')">
+                <div class="project-title">▮ ANIMAL RIDER</div>
+                <div class="text-xs text-muted project-meta">GAME CONCEPT</div>
+            </div>
+            <div class="text-xs text-muted">An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state.</div>
+        </div>
+
+        <div class="project-row" style="border-bottom: none;">
+            <div class="project-clickable" onclick="openModal('LUDO ROGUELIKE', 'Classic Ludo is fused with a rogue-like card system in this demo. Every turn you roll the dice, draw a card, and strategize with 6 unique card types like Shotgun, Sniper, Shield, Swap, Sprint, and Win Steak. It supports 2-4 players in local hot-seat mode or vs AI.', 'gdd', '18PtNKbq7WeXcZjU2oLqRSorN8yKN41hG')">
+                <div class="project-title">▮ LUDO ROGUELIKE</div>
+                <div class="text-xs text-muted project-meta">GAME CONCEPT</div>
+            </div>
+            <div class="text-xs text-muted">A classic Ludo board game fused with a card system that breaks the rules every turn.</div>
+        </div>
+    </section>
+
+    <!-- WRITINGS -->
+    <section class="mb-3">
+        <h2 class="section-header">WRITINGS</h2>
+        
+        <div class="project-row">
+            <div class="project-title">▮ TAROT SHORT STORIES</div>
+            <div class="text-xs text-muted">A series of philosophical fables based on the Major Arcana. Titles include The Fool, The Lover, The Devil, and The High Priestess.</div>
+        </div>
+
+        <div class="project-row" style="border-bottom: none;">
+            <div class="project-title">▮ SCP-STYLE REPORTS</div>
+            <div class="text-xs text-muted">Classified, clinical horror files written in the style of secure containment documents. Titles include The Immortal Dead, The Divided Subject, Friend and Foe, and The Crawling Family.</div>
+        </div>
+    </section>
+
+    <!-- TOOLBOX & HISTORY -->
+    <section class="mb-3">
+        <h2 class="section-header">TOOLBOX & WORK HISTORY</h2>
+        
+        <div class="flex flex-col gap-1" style="margin-bottom: 20px;">
+            <div class="text-muted text-xs">[ / ] FRONT-END :</div>
+            <div class="indent-text text-sm">HTML · CSS · JAVASCRIPT</div>
+            <div class="indent-text text-sm">GIT · PWA · LOCALSTORAGE · OFFLINE APPS</div>
+            
+            <div class="text-muted text-xs mt-1">[ / ] DESIGN :</div>
+            <div class="indent-text text-sm">GAME DESIGN DOCUMENTS · NARRATIVE WRITING · WORLDBUILDING</div>
+        </div>
+
+        <div class="flex flex-col gap-1">
+            <div class="text-muted text-xs">[ / ] HISTORY :</div>
+            <div class="flex justify-between text-sm" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+                <span>2024 – GAME DESIGNER</span>
+                <span class="text-muted text-xs">THE LOOP (GDD)</span>
+            </div>
+            <div class="flex justify-between text-sm" style="border-bottom: 1px solid var(--border-light); padding: 8px 0;">
+                <span>2023 – WEB DEVELOPER</span>
+                <span class="text-muted text-xs">BOOKSHELF / PRIMARY</span>
+            </div>
+            <div class="flex justify-between text-sm" style="padding: 8px 0;">
+                <span>2023 – NARRATIVE WRITER</span>
+                <span class="text-muted text-xs">TAROT / SCP</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="mb-2">
+        <h2 class="section-header">CONTACT</h2>
+        <div class="flex flex-col gap-1 text-sm">
+            <div class="flex justify-between" onclick="copyEmail()">
+                <span>EMAIL</span>
+                <span class="text-muted" style="cursor: pointer;">TrineryA2@gmail.com</span>
+            </div>
+            <div class="flex justify-between">
+                <span>GITHUB</span>
+                <a href="https://github.com/TrineryA2" target="_blank" class="text-muted" style="cursor: pointer;">github.com/TrineryA2</a>
+            </div>
+            <div class="flex justify-between">
+                <span>ITCH.IO</span>
+                <a href="https://trinerya2.itch.io" target="_blank" class="text-muted" style="cursor: pointer;">trinerya2.itch.io</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer-grid">
+        <div>TA2<br><span class="text-xs">© 2026</span></div>
+        <div class="text-right text-xs">TrineryA2@gmail.com</div>
+        <div class="text-xs">github.com/TrineryA2</div>
+        <div class="text-right text-xs">trinerya2.itch.io</div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script>
+        /* --- THEME TOGGLE --- */
+        const sunPath = "M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM12 2v2m0 16v2M4.93 4.93l1.41 1.41m11.32 11.32l1.41 1.41M2 12h2m16 0h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41";
+        const moonPath = "M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9c0.83 0 1.64-0.12 2.41-0.33-2.35-1.19-4-3.6-4-6.34s1.65-5.15 4-6.34c-0.77-0.21-1.58-0.33-2.41-0.33z";
+
+        if (localStorage.getItem('theme') === 'light') {
+            document.body.classList.add('light-mode');
+            document.getElementById('theme-icon').setAttribute('d', moonPath);
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const icon = document.getElementById('theme-icon');
+            body.classList.toggle('light-mode');
+            if (body.classList.contains('light-mode')) {
+                localStorage.setItem('theme', 'light');
+                icon.setAttribute('d', moonPath);
+            } else {
+                localStorage.setItem('theme', 'dark');
+                icon.setAttribute('d', sunPath);
+            }
+        }
+
+        /* --- COPY EMAIL --- */
+        function copyEmail() {
+            const email = "TrineryA2@gmail.com";
+            navigator.clipboard.writeText(email).then(() => {
+                const tooltip = document.getElementById("copy-tooltip");
+                tooltip.classList.add("show");
+                setTimeout(() => { tooltip.classList.remove("show"); }, 1500);
+            });
+        }
+
+        /* --- MODAL / POPUP LOGIC --- */
+        function openModal(title, description, type, fileId) {
+            document.getElementById('modalTitle').innerText = "▮ " + title;
+            document.getElementById('modalDesc').innerText = description;
+            
+            const linkContainer = document.getElementById('modalLinks');
+            linkContainer.innerHTML = ''; 
+
+            if (type === 'apk') {
+                // MediaFire APK Download
+                const apkLink = `https://www.mediafire.com/file/${fileId}/file`;
+                linkContainer.innerHTML = `
+                    <a href="${apkLink}" target="_blank" class="modal-link">[ DOWNLOAD APK ]</a>
+                `;
+            } else if (type === 'web') {
+                // Direct Website Link (Stumble)
+                // Opens in a new tab so if it loads slow, the user doesn't lose your portfolio
+                linkContainer.innerHTML = `
+                    <a href="${fileId}" target="_blank" class="modal-link">[ VISIT WEBSITE ]</a>
+                `;
+            } else if (type === 'gdd' && fileId) {
+                // Google Drive GDD View
+                const viewLink = `https://drive.google.com/file/d/${fileId}/view`;
+                linkContainer.innerHTML = `
+                    <a href="${viewLink}" target="_blank" class="modal-link">[ VIEW GDD ]</a>
+                `;
+            }
+
+            document.getElementById('projectModal').classList.add('open');
+        }
+
+        function closeModal() {
+            document.getElementById('projectModal').classList.remove('open');
+        }
+
+        function closeModalOutside(event) {
+            if (event.target === document.getElementById('projectModal')) {
+                closeModal();
+            }
+        }
+    </script>
+</body>
+</html>
