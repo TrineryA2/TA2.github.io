@@ -47,6 +47,14 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        /* --- WIDER DESKTOP LAYOUT (ONLY REARRANGEMENT) --- */
+        @media (min-width: 900px) {
+            body {
+                max-width: 1200px;
+                padding: 30px 40px;
+            }
+        }
+
         /* Typography Utilities */
         .flex { display: flex; }
         .flex-col { flex-direction: column; }
@@ -142,7 +150,23 @@
         .block-text { display: block; margin-bottom: 8px; }
         .indent-text { padding-left: 15px; border-left: 1px solid var(--border-color); margin-top: 15px; transition: border-color 0.3s ease; }
 
-        /* Projects */
+        /* --- PROJECTS REARRANGED (2 columns on desktop) --- */
+        .projects-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        @media (min-width: 900px) {
+            .projects-container {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 20px 40px;
+                border-top: 1px solid var(--border-light);
+                padding-top: 10px;
+            }
+        }
+
         .project-row {
             display: flex;
             flex-direction: column;
@@ -152,6 +176,19 @@
             transition: border-color 0.3s ease;
         }
         .project-row:last-child { border-bottom: none; }
+
+        @media (min-width: 900px) {
+            .project-row {
+                border-bottom: 1px solid var(--border-light);
+                padding: 16px 0;
+            }
+            /* Remove bottom border for last item in each column */
+            .project-row:last-child,
+            .project-row:nth-last-child(2):nth-child(odd) {
+                border-bottom: none;
+            }
+        }
+
         .project-title { font-weight: bold; letter-spacing: 1px; font-size: 14px; }
         .project-meta { font-size: 12px; color: var(--muted-color); }
 
@@ -378,156 +415,158 @@
         <section id="projects" class="mb-3">
             <h2 class="section-header">WHAT I BUILD</h2>
             
-            <!-- BOOKSHELF (APK) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'BOOKSHELF', 
-                    'An offline PWA library manager that lets you store books, track reading status, and view them organized on a 3D wooden shelf interface.', 
-                    'bookshelf.png', 
-                    'PWA · JavaScript · CSS', 
-                    'UNIVERSAL (32-BIT / 64-BIT)', 
-                    'ANDROID 5.0+', 
-                    '10.5 MB', 
-                    'sngpb19mkg508ml', 
-                    'The user opens the app and sees a 3D wooden shelf. By tapping the ADD BOOK button, a form appears. The user enters the title and author, selects a cover color or uploads a custom cover image, and picks a status (Reading, Not Started, Complete). The book appears on the shelf instantly. Swiping left or right reveals more shelves. Tapping My Books displays all entries in a searchable list format.'
-                )">
-                    <div class="project-title">▮ BOOKSHELF</div>
-                    <div class="text-xs text-muted project-meta">WEB APP</div>
+            <div class="projects-container">
+                <!-- BOOKSHELF (APK) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'BOOKSHELF', 
+                        'An offline PWA library manager that lets you store books, track reading status, and view them organized on a 3D wooden shelf interface.', 
+                        'bookshelf.png', 
+                        'PWA · JavaScript · CSS', 
+                        'UNIVERSAL (32-BIT / 64-BIT)', 
+                        'ANDROID 5.0+', 
+                        '10.5 MB', 
+                        'sngpb19mkg508ml', 
+                        'The user opens the app and sees a 3D wooden shelf. By tapping the ADD BOOK button, a form appears. The user enters the title and author, selects a cover color or uploads a custom cover image, and picks a status (Reading, Not Started, Complete). The book appears on the shelf instantly. Swiping left or right reveals more shelves. Tapping My Books displays all entries in a searchable list format.'
+                    )">
+                        <div class="project-title">▮ BOOKSHELF</div>
+                        <div class="text-xs text-muted project-meta">WEB APP</div>
+                    </div>
+                    <div class="text-xs text-muted">An offline PWA library manager. Store books, track reading status, and view them on a 3D wooden shelf.</div>
                 </div>
-                <div class="text-xs text-muted">An offline PWA library manager. Store books, track reading status, and view them on a 3D wooden shelf.</div>
-            </div>
 
-            <!-- PRIMARY (APK) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'PRIMARY', 
-                    'A color memory game where you must memorize a target color and accurately recreate it using RGB sliders. Your score is calculated based on how precise your color matching is.', 
-                    'primary.png', 
-                    'HTML · CSS · JavaScript', 
-                    'UNIVERSAL (32-BIT / 64-BIT)', 
-                    'ANDROID 5.0+', 
-                    '10.68 MB', 
-                    'q36xnwrc36zjbwn', 
-                    'The user is presented with a target color on the screen. After memorizing it, the user must move three RGB sliders (Red, Green, Blue) to recreate the exact shade. Once the user confirms their attempt, the app compares the selected color to the target color and assigns a score based on the accuracy of the match.'
-                )">
-                    <div class="project-title">▮ PRIMARY</div>
-                    <div class="text-xs text-muted project-meta">WEB APP</div>
+                <!-- PRIMARY (APK) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'PRIMARY', 
+                        'A color memory game where you must memorize a target color and accurately recreate it using RGB sliders. Your score is calculated based on how precise your color matching is.', 
+                        'primary.png', 
+                        'HTML · CSS · JavaScript', 
+                        'UNIVERSAL (32-BIT / 64-BIT)', 
+                        'ANDROID 5.0+', 
+                        '10.68 MB', 
+                        'q36xnwrc36zjbwn', 
+                        'The user is presented with a target color on the screen. After memorizing it, the user must move three RGB sliders (Red, Green, Blue) to recreate the exact shade. Once the user confirms their attempt, the app compares the selected color to the target color and assigns a score based on the accuracy of the match.'
+                    )">
+                        <div class="project-title">▮ PRIMARY</div>
+                        <div class="text-xs text-muted project-meta">WEB APP</div>
+                    </div>
+                    <div class="text-xs text-muted">A color memory game. Memorize a color, recreate it using RGB sliders, and score based on accuracy.</div>
                 </div>
-                <div class="text-xs text-muted">A color memory game. Memorize a color, recreate it using RGB sliders, and score based on accuracy.</div>
-            </div>
 
-            <!-- STUMBLE (Web App) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'STUMBLE', 
-                    'A web randomizer tool that sends you to hidden, weird, and interesting corners of the internet with a single tap.', 
-                    'stumble.png', 
-                    'HTML · CSS · JavaScript', 
-                    'BROWSER', 
-                    'N/A', 
-                    'N/A', 
-                    'https://trinerya2.github.io/Stumble/', 
-                    'The user taps the STUMBLE button on the screen. The app queries a curated list of obscure and interesting websites, then redirects the user to a random destination. Each tap sends you to a new hidden corner of the internet, providing endless discovery without any repeated destinations.'
-                )">
-                    <div class="project-title">▮ STUMBLE</div>
-                    <div class="text-xs text-muted project-meta">WEB APP</div>
+                <!-- STUMBLE (Web App) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'STUMBLE', 
+                        'A web randomizer tool that sends you to hidden, weird, and interesting corners of the internet with a single tap.', 
+                        'stumble.png', 
+                        'HTML · CSS · JavaScript', 
+                        'BROWSER', 
+                        'N/A', 
+                        'N/A', 
+                        'https://stumble-io.netlify.app', 
+                        'The user taps the STUMBLE button on the screen. The app queries a curated list of obscure and interesting websites, then redirects the user to a random destination. Each tap sends you to a new hidden corner of the internet, providing endless discovery without any repeated destinations.'
+                    )">
+                        <div class="project-title">▮ STUMBLE</div>
+                        <div class="text-xs text-muted project-meta">WEB APP</div>
+                    </div>
+                    <div class="text-xs text-muted">A web randomizer that sends you to hidden, weird, and interesting corners of the internet.</div>
                 </div>
-                <div class="text-xs text-muted">A web randomizer that sends you to hidden, weird, and interesting corners of the internet.</div>
-            </div>
 
-            <!-- THE LOOP (GDD) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'THE LOOP', 
-                    'A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom.', 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    'https://drive.google.com/file/d/1NRxaWkRofYcpiQIXNQx3rSz6AwUielph/view', 
-                    'The player controls a child who breaks free from an oppressive school system to explore a vibrant forest. Through rhythm-based petting, healing injured animals, and solving environmental puzzles, the player bonds with wildlife. The game builds toward an emotional chase sequence and a thought-provoking ending about free will and consequence.'
-                )">
-                    <div class="project-title">▮ THE LOOP</div>
-                    <div class="text-xs text-muted project-meta">GDD</div>
+                <!-- THE LOOP (GDD) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'THE LOOP', 
+                        'A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom.', 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        'https://drive.google.com/file/d/1NRxaWkRofYcpiQIXNQx3rSz6AwUielph/view', 
+                        'The player controls a child who breaks free from an oppressive school system to explore a vibrant forest. Through rhythm-based petting, healing injured animals, and solving environmental puzzles, the player bonds with wildlife. The game builds toward an emotional chase sequence and a thought-provoking ending about free will and consequence.'
+                    )">
+                        <div class="project-title">▮ THE LOOP</div>
+                        <div class="text-xs text-muted project-meta">GDD</div>
+                    </div>
+                    <div class="text-xs text-muted">A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom.</div>
                 </div>
-                <div class="text-xs text-muted">A narrative-driven 3D platformer about breaking free from conformity and facing the consequences of freedom.</div>
-            </div>
 
-            <!-- CONCRETE SHIFT (GDD) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'CONCRETE SHIFT', 
-                    'A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement.', 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    'https://drive.google.com/file/d/1no5a8Jb-T1rSOrofxKcoJ6NNpbEFIId6/view', 
-                    'The player controls a construction worker who falls into a vertical pipe of wet cement. They must carefully manage their movements to avoid sinking deeper or letting the cement harden. Using visual rhythm cues, the player attempts to climb out, reach a phone, or survive until morning while managing the risk of permanent entrapment.'
-                )">
-                    <div class="project-title">▮ CONCRETE SHIFT</div>
-                    <div class="text-xs text-muted project-meta">GDD</div>
+                <!-- CONCRETE SHIFT (GDD) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'CONCRETE SHIFT', 
+                        'A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement.', 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        'https://drive.google.com/file/d/1no5a8Jb-T1rSOrofxKcoJ6NNpbEFIId6/view', 
+                        'The player controls a construction worker who falls into a vertical pipe of wet cement. They must carefully manage their movements to avoid sinking deeper or letting the cement harden. Using visual rhythm cues, the player attempts to climb out, reach a phone, or survive until morning while managing the risk of permanent entrapment.'
+                    )">
+                        <div class="project-title">▮ CONCRETE SHIFT</div>
+                        <div class="text-xs text-muted project-meta">GDD</div>
+                    </div>
+                    <div class="text-xs text-muted">A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement.</div>
                 </div>
-                <div class="text-xs text-muted">A first-person rhythm survival game about a construction worker trapped in a concrete pipe filling with wet cement.</div>
-            </div>
 
-            <!-- ESCAPE THE SALE (GDD) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'ESCAPE THE SALE', 
-                    'A first-person maze runner where a husband must escape a furniture store before his wife\'s shopping bill becomes overwhelming.', 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    'https://drive.google.com/file/d/1hEBGfhJZft8erwAdDGGZtxo3Qs2-uIFa/view', 
-                    'The player controls a husband trapped in a massive furniture store during a sale. They must navigate a procedurally generated maze of showrooms and aisles, dodging NPCs and the wife\'s friends, all while keeping the total shopping bill as low as possible. Find the exit before getting caught and forced to checkout.'
-                )">
-                    <div class="project-title">▮ ESCAPE THE SALE</div>
-                    <div class="text-xs text-muted project-meta">GDD</div>
+                <!-- ESCAPE THE SALE (GDD) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'ESCAPE THE SALE', 
+                        'A first-person maze runner where a husband must escape a furniture store before his wife\'s shopping bill becomes overwhelming.', 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        'https://drive.google.com/file/d/1hEBGfhJZft8erwAdDGGZtxo3Qs2-uIFa/view', 
+                        'The player controls a husband trapped in a massive furniture store during a sale. They must navigate a procedurally generated maze of showrooms and aisles, dodging NPCs and the wife\'s friends, all while keeping the total shopping bill as low as possible. Find the exit before getting caught and forced to checkout.'
+                    )">
+                        <div class="project-title">▮ ESCAPE THE SALE</div>
+                        <div class="text-xs text-muted project-meta">GDD</div>
+                    </div>
+                    <div class="text-xs text-muted">A first-person maze runner where a husband must escape a furniture store before his wife's shopping bill becomes overwhelming.</div>
                 </div>
-                <div class="text-xs text-muted">A first-person maze runner where a husband must escape a furniture store before his wife's shopping bill becomes overwhelming.</div>
-            </div>
 
-            <!-- ANIMAL RIDER (GDD) -->
-            <div class="project-row">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'ANIMAL RIDER', 
-                    'An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state.', 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    'https://drive.google.com/file/d/1oV1CDefZn5pXu8UtplgRDatCfoCBvcKj/view', 
-                    'The player rides animals at high speeds through traffic-filled roads and mountain paths. By drifting around corners and taking risks, the player builds up an energy meter. When full, they can activate Super Sonic Mode to destroy obstacles and reach extreme speeds. The game is an endless runner where control and risk management are key.'
-                )">
-                    <div class="project-title">▮ ANIMAL RIDER</div>
-                    <div class="text-xs text-muted project-meta">GDD</div>
+                <!-- ANIMAL RIDER (GDD) -->
+                <div class="project-row">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'ANIMAL RIDER', 
+                        'An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state.', 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        'https://drive.google.com/file/d/1oV1CDefZn5pXu8UtplgRDatCfoCBvcKj/view', 
+                        'The player rides animals at high speeds through traffic-filled roads and mountain paths. By drifting around corners and taking risks, the player builds up an energy meter. When full, they can activate Super Sonic Mode to destroy obstacles and reach extreme speeds. The game is an endless runner where control and risk management are key.'
+                    )">
+                        <div class="project-title">▮ ANIMAL RIDER</div>
+                        <div class="text-xs text-muted project-meta">GDD</div>
+                    </div>
+                    <div class="text-xs text-muted">An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state.</div>
                 </div>
-                <div class="text-xs text-muted">An arcade racing game about high-speed riding on animals. Drifting builds energy to unlock a temporary overpower state.</div>
-            </div>
 
-            <!-- LUDO ROGUELIKE (GDD) -->
-            <div class="project-row" style="border-bottom: none;">
-                <div class="project-clickable" onclick="openAppInfo(
-                    'LUDO ROGUELIKE', 
-                    'A classic Ludo board game fused with a card system that breaks the rules every turn.', 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    null, 
-                    'https://drive.google.com/file/d/18PtNKbq7WeXcZjU2oLqRSorN8yKN41hG/view', 
-                    'This is classic Ludo combined with a card system. At the start of each turn, the player rolls the dice, draws a card, and chooses whether to play it. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. It supports 2-4 players in hot-seat mode or against AI, making every match feel fresh and unpredictable.'
-                )">
-                    <div class="project-title">▮ LUDO ROGUELIKE</div>
-                    <div class="text-xs text-muted project-meta">GDD</div>
+                <!-- LUDO ROGUELIKE (GDD) -->
+                <div class="project-row" style="border-bottom: none;">
+                    <div class="project-clickable" onclick="openAppInfo(
+                        'LUDO ROGUELIKE', 
+                        'A classic Ludo board game fused with a card system that breaks the rules every turn.', 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        null, 
+                        'https://drive.google.com/file/d/18PtNKbq7WeXcZjU2oLqRSorN8yKN41hG/view', 
+                        'This is classic Ludo combined with a card system. At the start of each turn, the player rolls the dice, draws a card, and chooses whether to play it. Cards like Shotgun, Shield, and Win Steak completely change the flow of the game. It supports 2-4 players in hot-seat mode or against AI, making every match feel fresh and unpredictable.'
+                    )">
+                        <div class="project-title">▮ LUDO ROGUELIKE</div>
+                        <div class="text-xs text-muted project-meta">GDD</div>
+                    </div>
+                    <div class="text-xs text-muted">A classic Ludo board game fused with a card system that breaks the rules every turn.</div>
                 </div>
-                <div class="text-xs text-muted">A classic Ludo board game fused with a card system that breaks the rules every turn.</div>
             </div>
         </section>
 
